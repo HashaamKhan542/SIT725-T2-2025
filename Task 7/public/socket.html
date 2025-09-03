@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Socket.IO Demo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 100px;
+      }
+      #number {
+        font-size: 60px;
+        font-family: monospace;
+        color: #007acc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Live Random Number from Server</h1>
+    <div id="number">—</div>
+
+    <!-- Load socket.io client -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io(); // connect to server
+
+      // listen for 'number' event
+      socket.on('number', (value) => {
+        console.log('Received number:', value);
+        document.getElementById('number').textContent = value;
+      });
+    </script>
+  </body>
+</html>
