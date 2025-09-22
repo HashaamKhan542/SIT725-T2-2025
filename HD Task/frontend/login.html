@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <base href="/frontend/"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Log in • Fake News Identifier</title>
+
+  <!-- CSS order: Materialize first, then icons, then your site styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css"/>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body class="theme-dark">
+
+  <div id="navbar-container"></div>
+ <main class="container auth-wrap">
+  <h1 class="auth-hero center-align" style="margin-top:28px;">Log in</h1>
+  <p class="grey-text text-lighten-1 center-align" style="margin-bottom:24px">
+    Access your dashboard and see your past checks.
+  </p>
+
+  <div class="card auth-card" style="max-width:500px;margin:0 auto;">
+    <div class="card-content white-text">
+      <form id="loginForm" novalidate>
+        <div class="input-field">
+          <input id="login-email" type="email" autocomplete="email" required placeholder="you@example.com">
+          <label for="login-email">Email</label>
+        </div>
+
+        <div class="input-field">
+          <input id="login-password" type="password" autocomplete="current-password" required placeholder="********">
+          <label for="login-password">Password</label>
+        </div>
+
+        <p>
+          <label>
+            <input type="checkbox" id="rememberMe" />
+            <span>Remember me on this device</span>
+          </label>
+        </p>
+
+        <div class="section" style="margin-top:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-cta waves-effect waves-light" type="submit">
+            <i class="material-icons left">login</i>Log in
+          </button>
+          <a href="/frontend/register.html" class="btn-flat auth-hint">Need an account? Create one</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+
+  <footer class="page-footer footer-compact">
+    <div class="container">© 2025 Group 11 · Fake News Identifier</div>
+  </footer>
+
+  <!-- Tiny page-only script for the eye toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const pwd = document.getElementById('login-password');
+      const btn = document.getElementById('togglePwd');
+      btn?.addEventListener('click', () => {
+        const show = pwd.type === 'password';
+        pwd.type = show ? 'text' : 'password';
+        btn.querySelector('i').textContent = show ? 'visibility_off' : 'visibility';
+        pwd.focus();
+      });
+    });
+    // Example login handler
+async function onLoginSubmit(e) {
+  e.preventDefault();
+  // const { token, name } = await (await fetch('/api/auth/login', {...})).json();
+  // For demo, assume you get token + name:
+  const token = loginResponse.token;     // <- from backend
+  const name  = loginResponse.name || '';
+
+  Auth.setToken(token);
+  if (name) localStorage.setItem('userName', name);
+
+  try { M.toast({ html: 'Welcome!', classes: 'green darken-2' }); } catch(_) {}
+  Auth.completeLoginAndRedirect('/frontend/dashboard.html');
+}
+
+  </script>
+    <script src="js/navbar.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/analyze.js"></script>
+</body>
+</html>
